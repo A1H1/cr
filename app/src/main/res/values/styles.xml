@@ -29,13 +29,22 @@
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
+        <item name="android:letterSpacing">0</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="TitleText">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
     <style name="ActionButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:background">@drawable/bg_action_button</item>
+        <item name="cornerRadius">@dimen/large</item>
         <item name="android:padding">@dimen/small_medium</item>
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
     </style>
 
     <style name="ButtonTextView">
@@ -59,5 +68,11 @@
         <item name="android:textAllCaps">true</item>
         <item name="fontFamily">@font/roboto_bold</item>
         <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 </resources>

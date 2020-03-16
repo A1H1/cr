@@ -8,62 +8,55 @@
         style="@style/Fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/large"
-        android:paddingEnd="@dimen/large">
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/HeadLine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium"
-            android:layout_marginBottom="@dimen/large_small"
-            android:text="@string/sign_up" />
+        <include layout="@layout/toolbar_common" />
 
         <include
             layout="@layout/input_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium" />
+            android:layout_marginStart="@dimen/large"
+            android:layout_marginTop="@dimen/medium"
+            android:layout_marginEnd="@dimen/large" />
 
         <include
             layout="@layout/input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large" />
+            android:layout_marginStart="@dimen/large"
+            android:layout_marginTop="@dimen/large"
+            android:layout_marginEnd="@dimen/large" />
 
         <include
             layout="@layout/input_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large" />
+            android:layout_marginStart="@dimen/large"
+            android:layout_marginTop="@dimen/large"
+            android:layout_marginEnd="@dimen/large" />
 
         <include
             layout="@layout/input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/forgotPasswordButton"
-            style="@style/TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_small"
-            android:text="@string/forgot_password" />
+            android:layout_marginStart="@dimen/large"
+            android:layout_marginTop="@dimen/large"
+            android:layout_marginEnd="@dimen/large" />
 
         <include
             layout="@layout/button_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium" />
+            android:layout_marginStart="@dimen/large"
+            android:layout_marginTop="@dimen/large"
+            android:layout_marginEnd="@dimen/large" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/noAccountButton"
+            android:id="@+id/alreadyHaveAccountButton"
             style="@style/TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium"
-            android:text="@string/don_t_have_account_yet" />
+            android:text="@string/already_have_an_account" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
