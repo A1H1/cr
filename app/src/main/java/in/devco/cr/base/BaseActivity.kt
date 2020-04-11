@@ -8,7 +8,7 @@ import dagger.android.support.DaggerAppCompatActivity
 abstract class BaseActivity : DaggerAppCompatActivity() {
     @LayoutRes
     protected abstract fun layoutRes(): Int
-    protected abstract fun init()
+    protected open fun init() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

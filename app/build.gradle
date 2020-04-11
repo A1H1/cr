@@ -18,8 +18,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", '"https://us-central1-databaseapp-9d45e.cloudfunctions.net/app/"'
+        }
         release {
-            minifyEnabled false
+            buildConfigField "String", "BASE_URL", '"https://us-central1-databaseapp-9d45e.cloudfunctions.net/app/"'
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -33,6 +37,7 @@ android {
 def rxJavaVersion = '2.1.1'
 def butterKnifeVersion = '10.2.1'
 def daggerVersion = '2.26'
+def retrofitVersion = '2.8.1'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -54,6 +59,11 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     implementation 'com.github.A1H1:fragment_launcher:v0.1.0'
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.3.1"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
