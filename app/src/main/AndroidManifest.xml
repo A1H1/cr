@@ -19,13 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.auth.register.SignUpActivity" />
-        <activity android:name=".ui.auth.login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.auth.login.LoginActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
     </application>
 
