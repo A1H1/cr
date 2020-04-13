@@ -11,7 +11,6 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector
     abstract fun loginActivity(): LoginActivity
 
-
     @ContributesAndroidInjector
     abstract fun signUpActivity(): SignUpActivity
 

@@ -10,4 +10,8 @@
     <string name="phone">Phone</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="register">Register</string>
+    <string name="no_internet">No Internet</string>
+    <string name="server_error">Server Error</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="auth_error">Authentication Error</string>
 </resources>

@@ -1,5 +1,6 @@
 package `in`.devco.cr.base
 
+import `in`.devco.cr.util.AppUtils.displaySnackBar
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import butterknife.ButterKnife
@@ -16,5 +17,9 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         ButterKnife.bind(this)
 
         init()
+    }
+
+    fun displayMessage(message: String) {
+        displaySnackBar(findViewById(android.R.id.content), message)
     }
 }

@@ -1,5 +1,8 @@
 package `in`.devco.cr.base
 
+import `in`.devco.cr.R
+import `in`.devco.cr.data.model.ErrorResponse
+import `in`.devco.cr.util.AppUtils.displaySnackBar
 import `in`.devco.cr.util.ViewModelFactory
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,8 +14,8 @@ import javax.inject.Inject
 abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), ErrorHandler {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     protected lateinit var viewModel: U
+
     override fun init() {
         super.init()
         viewModel = ViewModelProvider(this, viewModelFactory).get(viewModel.javaClass)
@@ -24,6 +27,7 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
             loading(response.isLoading)
             response.response?.let { setData(it) }
             response.error?.let { error(it) }
+            response.errorCode?.let { error(it) }
             response.exception?.let { error(it) }
             response.inputError?.let { inputError(it) }
         })
@@ -53,16 +57,24 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
         }
     }
 
+    override fun error(error: ErrorResponse) {
+        displayMessage(error.error)
+    }
+
     override fun authError() {
+        displaySnackBar(findViewById(android.R.id.content), R.string.auth_error)
     }
 
     override fun noInternet() {
+        displaySnackBar(findViewById(android.R.id.content), R.string.no_internet)
     }
 
     override fun displayError() {
+        displaySnackBar(findViewById(android.R.id.content), R.string.something_went_wrong)
     }
 
     override fun serverError() {
+        displaySnackBar(findViewById(android.R.id.content), R.string.server_error)
     }
 
     override fun inputError(code: Int) {
