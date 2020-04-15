@@ -14,4 +14,7 @@
     <string name="server_error">Server Error</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="auth_error">Authentication Error</string>
+    <string name="description">Description</string>
+    <string name="report">Report</string>
+    <string name="title">Title</string>
 </resources>
