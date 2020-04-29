@@ -4,8 +4,10 @@ import `in`.devco.cr.R
 import `in`.devco.cr.data.model.ErrorResponse
 import `in`.devco.cr.util.AppUtils.displaySnackBar
 import `in`.devco.cr.util.ViewModelFactory
+import `in`.devco.cr.util.show
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
@@ -15,6 +17,7 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     protected lateinit var viewModel: U
+    private lateinit var progressDialog: MaterialDialog
 
     override fun init() {
         super.init()
@@ -36,6 +39,11 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
     protected abstract fun setData(data: T)
 
     protected open fun loading(isLoading: Boolean) {
+        if (::progressDialog.isInitialized) {
+            progressDialog.show(isLoading)
+        } else {
+            initMaterialDialog()
+        }
     }
 
     override fun error(throwable: Throwable) {
@@ -78,5 +86,13 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
     }
 
     override fun inputError(code: Int) {
+    }
+
+    private fun initMaterialDialog() {
+        progressDialog = MaterialDialog.Builder(this)
+            .content(R.string.please_wait)
+            .cancelable(false)
+            .progress(true, 0)
+            .show()
     }
 }

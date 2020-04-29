@@ -5,6 +5,8 @@ import `in`.devco.cr.data.model.DataWrapper
 import `in`.devco.cr.data.model.ErrorResponse
 import `in`.devco.cr.data.model.User
 import `in`.devco.cr.data.repository.UserRepository
+import `in`.devco.cr.util.AppConst.INPUT_ERROR_EMAIL
+import `in`.devco.cr.util.AppConst.INPUT_ERROR_PASSWORD
 import `in`.devco.cr.util.AppUtils.isValidEmail
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -15,8 +17,10 @@ class LoginViewModel @Inject constructor(private val repository: UserRepository)
         data.postValue(DataWrapper(isLoading = true))
 
         if (!isValidEmail(email)) {
+            data.postValue(DataWrapper(inputError = INPUT_ERROR_EMAIL))
             return
         } else if (password.length < 6) {
+            data.postValue(DataWrapper(inputError = INPUT_ERROR_PASSWORD))
             return
         }
 
