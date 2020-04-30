@@ -23,7 +23,7 @@ object SharedPref {
         pref.apply()
     }
 
-    fun getUser(): User {
+    fun getUser(): User? {
         val pref = CRApplication
             .instance
             .applicationContext

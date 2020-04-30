@@ -40,7 +40,7 @@ object NetworkModule {
 
         val client = OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .addInterceptor(AuthInterceptor(getUser().token))
+            .addInterceptor(AuthInterceptor(getUser()?.token))
 
         return client.connectTimeout(18, TimeUnit.SECONDS)
             .writeTimeout(180, TimeUnit.SECONDS)
