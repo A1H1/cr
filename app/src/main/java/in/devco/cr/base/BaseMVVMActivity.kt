@@ -16,6 +16,7 @@ import javax.inject.Inject
 abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), ErrorHandler {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    @Inject
     protected lateinit var viewModel: U
     private lateinit var progressDialog: MaterialDialog
 

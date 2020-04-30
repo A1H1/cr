@@ -9,13 +9,13 @@ import javax.inject.Singleton
 
 @Suppress("UNCHECKED_CAST")
 @Singleton
-class ViewModelFactory @Inject constructor(private val creators: Map<Class<out ViewModel?>, Provider<ViewModel?>>) :
+class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) :
     ViewModelProvider.Factory {
     @NonNull
     override fun <T : ViewModel?> create(@NonNull modelClass: Class<T?>): T {
-        var creator: Provider<out ViewModel?>? = creators[modelClass]
+        var creator: Provider<out ViewModel?>? = viewModels[modelClass]
         if (creator == null) {
-            for ((key, value) in creators) {
+            for ((key, value) in viewModels) {
                 if (modelClass.isAssignableFrom(key)) {
                     creator = value
                     break
