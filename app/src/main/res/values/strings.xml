@@ -15,16 +15,25 @@
     <string name="something_went_wrong">Something went wrong</string>
     <string name="auth_error">Authentication Error</string>
     <string name="please_wait">Please wait&#8230;</string>
+    <string name="rationale_ask_again">
+        This app may not work correctly without the requested permissions.
+        Open the app settings screen to modify app permissions.
+    </string>
+    <string name="title_settings_dialog">Permissions Required</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+    <string name="emergency">Emergency</string>
+
+    <string name="title_activity_home">Home</string>
 
     <string name="invalid_email">Invalid email</string>
     <string name="invalid_password">Password is too short</string>
     <string name="invalid_name">Name can\'t be empty</string>
     <string name="invalid_phone">Invalid phone</string>
 
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_close">Drawer close</string>
 
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
@@ -33,6 +42,4 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-
-    <string name="home_second">Home Second</string>
 </resources>

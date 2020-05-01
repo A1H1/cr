@@ -1,9 +1,11 @@
 package `in`.devco.cr.base
 
+import `in`.devco.cr.R
 import `in`.devco.cr.util.AppUtils.displaySnackBar
 import `in`.devco.cr.util.SharedPref.getUser
 import android.os.Bundle
 import androidx.annotation.LayoutRes
+import androidx.appcompat.widget.Toolbar
 import butterknife.ButterKnife
 import dagger.android.support.DaggerAppCompatActivity
 
@@ -11,13 +13,39 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     @LayoutRes
     protected abstract fun layoutRes(): Int
     protected open fun init() {}
+    protected var toolbar: Toolbar? = null
+
+    var isDisplayHomeAsUpEnabled: Boolean
+        get() = false
+        set(value) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(value)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutRes())
         ButterKnife.bind(this)
 
+        setToolbar()
         init()
+    }
+
+    private fun setToolbar() {
+        toolbar = findViewById(R.id.toolbar)
+
+        setSupportActionBar(toolbar)
+
+        if (isDisplayHomeAsUpEnabled) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    fun setActivityTitle(title: Int) {
+        supportActionBar?.setTitle(title)
+    }
+
+    fun setActivityTitle(title: String) {
+        supportActionBar?.title = title
     }
 
     fun displayMessage(message: String) {
