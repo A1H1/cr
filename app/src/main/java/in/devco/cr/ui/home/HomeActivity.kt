@@ -3,6 +3,7 @@ package `in`.devco.cr.ui.home
 import `in`.devco.cr.R
 import `in`.devco.cr.base.BaseMVVMActivity
 import `in`.devco.cr.data.model.User
+import `in`.devco.cr.ui.reportcrime.ReportCrimeActivity
 import `in`.devco.cr.util.LocationListener
 import `in`.devco.cr.util.checkLocationPermissions
 import `in`.devco.cr.util.getLocationUpdate
@@ -10,6 +11,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -18,12 +20,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.navigation.NavigationView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.button_action.*
 
 
-class HomeActivity : BaseMVVMActivity<User, HomeViewModel>(), OnMapReadyCallback, LocationListener {
+class HomeActivity : BaseMVVMActivity<User, HomeViewModel>(), OnMapReadyCallback, LocationListener,
+    NavigationView.OnNavigationItemSelectedListener {
     companion object {
         fun launch(context: Context) {
             context.startActivity(Intent(context, HomeActivity::class.java))
@@ -47,7 +51,7 @@ class HomeActivity : BaseMVVMActivity<User, HomeViewModel>(), OnMapReadyCallback
         mapFragment.getMapAsync(this)
 
         disposable.clear()
-        disposable.add(checkLocationPermissions(mapFragment, this))
+        disposable.add(checkLocationPermissions(this, this))
     }
 
     override fun setData(data: User) {
@@ -82,6 +86,8 @@ class HomeActivity : BaseMVVMActivity<User, HomeViewModel>(), OnMapReadyCallback
         )
 
         actionBarDrawerToggle.syncState()
+
+        navigationView.setNavigationItemSelectedListener(this)
     }
 
     override fun onPermissionGranted() {
@@ -112,5 +118,12 @@ class HomeActivity : BaseMVVMActivity<User, HomeViewModel>(), OnMapReadyCallback
     override fun onDestroy() {
         super.onDestroy()
         disposable.clear()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_report_crime -> ReportCrimeActivity.launch(this)
+        }
+        return false
     }
 }

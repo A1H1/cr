@@ -9,7 +9,7 @@ import android.location.Location
 import android.net.Uri
 import android.provider.Settings
 import android.util.Log
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationSettingsRequest
@@ -25,8 +25,8 @@ interface LocationListener {
     fun onLocationNotFound()
 }
 
-fun checkLocationPermissions(fragment: Fragment, locationListener: LocationListener): Disposable {
-    val rxPermissions = RxPermissions(fragment)
+fun checkLocationPermissions(activity: FragmentActivity, locationListener: LocationListener): Disposable {
+    val rxPermissions = RxPermissions(activity)
     rxPermissions.setLogging(true)
 
     return rxPermissions
@@ -37,22 +37,7 @@ fun checkLocationPermissions(fragment: Fragment, locationListener: LocationListe
         .subscribe { permission ->
             when {
                 permission.granted -> locationListener.onPermissionGranted()
-                else -> {
-                    MaterialDialog.Builder(fragment.requireContext())
-                        .title(R.string.title_settings_dialog)
-                        .content(R.string.rationale_ask_again)
-                        .positiveText(R.string.allow)
-                        .negativeText(R.string.deny)
-                        .onPositive { _, _ ->
-                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
-                                fragment.startActivity(this)
-                            }
-                        }
-                        .onNegative { dialog, _ ->
-                            dialog.dismiss()
-                        }.show()
-                }
+                else -> displayDialog(activity)
             }
         }
 }
@@ -81,4 +66,47 @@ fun getLocationUpdate(context: Context, locationListener: LocationListener): Dis
             locationListener.onLocationNotFound()
             Log.e("ERROR", "${throwable.message}")
         }
+}
+
+fun getLocation(context: Context, locationListener: LocationListener): Disposable {
+    val reactiveLocationProvider = ReactiveLocationProvider(context)
+
+    val locationRequest = LocationRequest.create()
+        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        .setFastestInterval(200)
+        .setInterval(300)
+        .setNumUpdates(1)
+
+    return reactiveLocationProvider
+        .checkLocationSettings(
+            LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest)
+                .setAlwaysShow(true)
+                .build()
+        )
+        .subscribeOn(Schedulers.newThread())
+        .flatMap { reactiveLocationProvider.getUpdatedLocation(locationRequest) }
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({ location ->
+            locationListener.onLocationFound(location)
+        }) { throwable ->
+            locationListener.onLocationNotFound()
+            Log.e("ERROR", "${throwable.message}")
+        }
+}
+
+fun displayDialog(context: Context) {
+    MaterialDialog.Builder(context)
+        .cancelable(false)
+        .canceledOnTouchOutside(false)
+        .title(R.string.title_settings_dialog)
+        .content(R.string.rationale_ask_again)
+        .positiveText(R.string.allow)
+        .onPositive { _, _ ->
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                context.startActivity(this)
+            }
+        }
+        .show()
 }

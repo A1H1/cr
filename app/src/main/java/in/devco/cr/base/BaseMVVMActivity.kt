@@ -4,7 +4,7 @@ import `in`.devco.cr.R
 import `in`.devco.cr.data.model.ErrorResponse
 import `in`.devco.cr.util.AppUtils.displaySnackBar
 import `in`.devco.cr.util.ViewModelFactory
-import `in`.devco.cr.util.show
+import `in`.devco.cr.extensions.show
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog

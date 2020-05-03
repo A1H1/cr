@@ -1,5 +1,6 @@
-package `in`.devco.cr.util
+package `in`.devco.cr.extensions
 
+import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
 
 fun MaterialDialog.show(enable: Boolean) {
@@ -10,4 +11,12 @@ fun MaterialDialog.show(enable: Boolean) {
         if (isShowing)
             dismiss()
     }
+}
+
+fun View.show() {
+    visibility = View.VISIBLE
+}
+
+fun View.hide() {
+    visibility = View.GONE
 }

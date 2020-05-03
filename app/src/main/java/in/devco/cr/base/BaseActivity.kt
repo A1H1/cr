@@ -4,6 +4,7 @@ import `in`.devco.cr.R
 import `in`.devco.cr.util.AppUtils.displaySnackBar
 import `in`.devco.cr.util.SharedPref.getUser
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.Toolbar
 import butterknife.ButterKnife
@@ -28,6 +29,13 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
 
         setToolbar()
         init()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return true
     }
 
     private fun setToolbar() {

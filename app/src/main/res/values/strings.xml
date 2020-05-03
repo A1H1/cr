@@ -16,7 +16,6 @@
     <string name="auth_error">Authentication Error</string>
     <string name="description">Description</string>
     <string name="report">Report</string>
-    <string name="title">Title</string>
     <string name="please_wait">Please wait&#8230;</string>
     <string name="rationale_ask_again">
         This app may not work correctly without the requested permissions.
@@ -28,6 +27,7 @@
     <string name="emergency">Emergency</string>
 
     <string name="title_activity_home">Home</string>
+    <string name="title_activity_report_crime">Report Crime</string>
 
     <string name="invalid_email">Invalid email</string>
     <string name="invalid_password">Password is too short</string>
@@ -41,8 +41,4 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
 </resources>
