@@ -2,6 +2,7 @@ package `in`.devco.cr.di.module
 
 import `in`.devco.cr.ui.auth.login.LoginViewModel
 import `in`.devco.cr.ui.auth.register.SignUpViewModel
+import `in`.devco.cr.ui.home.HomeViewModel
 import `in`.devco.cr.util.ViewModelFactory
 import `in`.devco.cr.util.ViewModelKey
 import androidx.lifecycle.ViewModel
@@ -24,4 +25,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SignUpViewModel::class)
     internal abstract fun signUpViewModel(signUpViewModel: SignUpViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    internal abstract fun homeViewModel(homeViewModel: HomeViewModel): ViewModel
 }

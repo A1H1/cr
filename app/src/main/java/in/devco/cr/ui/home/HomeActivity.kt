@@ -1,32 +1,69 @@
 package `in`.devco.cr.ui.home
 
 import `in`.devco.cr.R
+import `in`.devco.cr.base.BaseMVVMActivity
+import `in`.devco.cr.data.model.User
+import `in`.devco.cr.util.LocationListener
+import `in`.devco.cr.util.checkLocationPermissions
+import `in`.devco.cr.util.getLocationUpdate
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
+import android.location.Location
 import android.view.Menu
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.button_action.*
 
-class HomeActivity : AppCompatActivity() {
+
+class HomeActivity : BaseMVVMActivity<User, HomeViewModel>(), OnMapReadyCallback, LocationListener {
     companion object {
         fun launch(context: Context) {
             context.startActivity(Intent(context, HomeActivity::class.java))
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+    private lateinit var mapFragment: SupportMapFragment
+    private val disposable = CompositeDisposable()
+    private var googleMap: GoogleMap? = null
+    private var haveLocationPermission = false
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+    override fun layoutRes() = R.layout.activity_home
+
+    override fun init() {
+        super.init()
+        actionTextView.setText(R.string.emergency)
+        setupNavigationView()
+
+        mapFragment =
+            supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+        disposable.clear()
+        disposable.add(checkLocationPermissions(mapFragment, this))
+    }
+
+    override fun setData(data: User) {
+
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        this.googleMap = googleMap
+        googleMap.isMyLocationEnabled = haveLocationPermission
+    }
+
+    override fun onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START, true)
+        } else {
+            super.onBackPressed()
         }
     }
 
@@ -35,4 +72,45 @@ class HomeActivity : AppCompatActivity() {
         return true
     }
 
+    private fun setupNavigationView() {
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawer,
+            toolbar,
+            R.string.drawer_open,
+            R.string.drawer_close
+        )
+
+        actionBarDrawerToggle.syncState()
+    }
+
+    override fun onPermissionGranted() {
+        haveLocationPermission = true
+        googleMap?.isMyLocationEnabled = haveLocationPermission
+
+        disposable.clear()
+        disposable.add(getLocationUpdate(this, this))
+    }
+
+    override fun onLocationFound(location: Location) {
+        Toast.makeText(this, "${location.latitude}, ${location.longitude}", Toast.LENGTH_LONG)
+            .show()
+
+        googleMap?.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    location.latitude,
+                    location.longitude
+                ), 19F
+            )
+        )
+    }
+
+    override fun onLocationNotFound() {
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
+    }
 }
