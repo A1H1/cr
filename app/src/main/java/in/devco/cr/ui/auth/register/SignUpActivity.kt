@@ -53,6 +53,7 @@ class SignUpActivity : BaseMVVMActivity<User, SignUpViewModel>() {
 
     override fun setData(data: User) {
         setUser(data).apply {
+            viewModel.updateToken()
             HomeActivity.launch(this@SignUpActivity).apply {
                 finish()
             }

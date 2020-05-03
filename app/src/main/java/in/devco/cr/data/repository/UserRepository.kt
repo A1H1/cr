@@ -7,4 +7,6 @@ class UserRepository @Inject constructor(private val service: API) {
     fun login(email: String, password: String) = service.login(email, password)
 
     fun signUp(data: Map<String, String>) = service.signUp(data)
+
+    fun updateFCMToken(token: String) = service.updateUserFCM(token)
 }

@@ -8,7 +8,11 @@ import `in`.devco.cr.data.repository.UserRepository
 import `in`.devco.cr.util.AppConst.INPUT_ERROR_EMAIL
 import `in`.devco.cr.util.AppConst.INPUT_ERROR_PASSWORD
 import `in`.devco.cr.util.AppUtils.isValidEmail
+import `in`.devco.cr.util.SharedPref.getFCMToken
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(private val repository: UserRepository) :
@@ -42,5 +46,12 @@ class LoginViewModel @Inject constructor(private val repository: UserRepository)
                     data.postValue(DataWrapper(exception = it))
                 })
         )
+    }
+
+    fun updateToken() {
+        repository.updateFCMToken(getFCMToken().orEmpty()).enqueue(object : Callback<Void> {
+            override fun onFailure(call: Call<Void>, t: Throwable) {}
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {}
+        })
     }
 }

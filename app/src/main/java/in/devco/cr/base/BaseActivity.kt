@@ -2,7 +2,7 @@ package `in`.devco.cr.base
 
 import `in`.devco.cr.R
 import `in`.devco.cr.util.AppUtils.displaySnackBar
-import `in`.devco.cr.util.SharedPref.getUser
+import `in`.devco.cr.util.SharedPref
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.LayoutRes
@@ -63,4 +63,6 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     fun isLoggedIn(): Boolean {
         return getUser() != null
     }
+
+    fun getUser() = SharedPref.getUser()
 }

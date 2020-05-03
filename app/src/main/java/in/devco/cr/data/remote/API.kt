@@ -5,7 +5,7 @@ import `in`.devco.cr.data.model.User
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface API {
@@ -20,6 +20,10 @@ interface API {
     @POST("users/signup")
     fun signUp(@FieldMap data: Map<String, String>): Single<BaseResponse<User>>
 
+    @POST("users/savedevicetoken")
+    @FormUrlEncoded
+    fun updateUserFCM(@Field("device_token") fcmId: String): Call<Void>
+
     @Multipart
     @POST("report")
     fun reportCrime(
@@ -28,5 +32,13 @@ interface API {
         @Part("desc") description: String,
         @Part imageFile: MultipartBody.Part?,
         @Part videoFile: MultipartBody.Part?
-    ) : Completable
+    ): Completable
+
+    @FormUrlEncoded
+    @POST("police/starttracker")
+    fun updateLocation(
+        @Field("lat") latitude: String,
+        @Field("long") longitude: String,
+        @Field("user_id") userId: String
+    ): Completable
 }

@@ -1,10 +1,7 @@
 package `in`.devco.cr.di
 
 import `in`.devco.cr.CRApplication
-import `in`.devco.cr.di.module.ActivityBindingModule
-import `in`.devco.cr.di.module.ApplicationModule
-import `in`.devco.cr.di.module.ContextModule
-import `in`.devco.cr.di.module.ViewModelModule
+import `in`.devco.cr.di.module.*
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
@@ -20,6 +17,7 @@ import javax.inject.Singleton
         ApplicationModule::class,
         AndroidSupportInjectionModule::class,
         ActivityBindingModule::class,
+        ServiceBindingModule::class,
         ViewModelModule::class
     ]
 )

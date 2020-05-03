@@ -1,2 +1,3 @@
 rootProject.name='CR'
 include ':app'
+include ':libs:android-reactive-location'

@@ -8,6 +8,7 @@ import com.google.gson.Gson
 object SharedPref {
     private const val PREF_FILE = "pref_file"
     private const val PREF_USER = "pref_user"
+    private const val PREF_FCM_TOKEN = "pref_fcm_token"
 
     fun setUser(user: User) {
         val pref = CRApplication
@@ -33,5 +34,31 @@ object SharedPref {
             )
 
         return Gson().fromJson(pref.getString(PREF_USER, ""), User::class.java)
+    }
+
+    fun setFCMToken(token: String) {
+        val pref = CRApplication
+            .instance
+            .applicationContext
+            .getSharedPreferences(
+                PREF_FILE,
+                MODE_PRIVATE
+            )
+            .edit()
+
+        pref.putString(PREF_FCM_TOKEN, token)
+        pref.apply()
+    }
+
+    fun getFCMToken(): String? {
+        val pref = CRApplication
+            .instance
+            .applicationContext
+            .getSharedPreferences(
+                PREF_FILE,
+                MODE_PRIVATE
+            )
+
+        return pref.getString(PREF_FCM_TOKEN, "")
     }
 }
