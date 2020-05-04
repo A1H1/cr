@@ -36,8 +36,7 @@ class LoginActivity : BaseMVVMActivity<User, LoginViewModel>() {
 
     override fun setData(data: User) {
         setUser(data).apply {
-            viewModel.updateToken()
-            HomeActivity.launch(this@LoginActivity).apply {
+            HomeActivity.launch(this@LoginActivity, true).apply {
                 finish()
             }
         }

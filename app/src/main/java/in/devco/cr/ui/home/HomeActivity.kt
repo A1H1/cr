@@ -2,8 +2,10 @@ package `in`.devco.cr.ui.home
 
 import `in`.devco.cr.R
 import `in`.devco.cr.base.BaseMVVMActivity
+import `in`.devco.cr.ui.auth.login.LoginActivity
 import `in`.devco.cr.ui.reportcrime.ReportCrimeActivity
 import `in`.devco.cr.util.LocationListener
+import `in`.devco.cr.util.SharedPref.logout
 import `in`.devco.cr.util.checkLocationPermissions
 import `in`.devco.cr.util.getLocationUpdate
 import android.content.Context
@@ -30,8 +32,11 @@ class HomeActivity : BaseMVVMActivity<Boolean, HomeViewModel>(), OnMapReadyCallb
     LocationListener,
     NavigationView.OnNavigationItemSelectedListener {
     companion object {
-        fun launch(context: Context) {
-            context.startActivity(Intent(context, HomeActivity::class.java))
+        private const val EXTRA_FCM = "EXTRA_FCM"
+        fun launch(context: Context, updateFCM: Boolean = false) {
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.putExtra(EXTRA_FCM, updateFCM)
+            context.startActivity(intent)
         }
     }
 
@@ -56,6 +61,10 @@ class HomeActivity : BaseMVVMActivity<Boolean, HomeViewModel>(), OnMapReadyCallb
 
         disposable.clear()
         disposable.add(checkLocationPermissions(this, this))
+
+        if (intent.getBooleanExtra(EXTRA_FCM, false)) {
+            viewModel.updateToken()
+        }
     }
 
     override fun setData(data: Boolean) {
@@ -138,5 +147,16 @@ class HomeActivity : BaseMVVMActivity<Boolean, HomeViewModel>(), OnMapReadyCallb
     @OnClick(R.id.actionButton)
     fun emergency() {
         isLocationShareRequired = true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_logout) {
+            logout().apply {
+                LoginActivity.launch(this@HomeActivity).apply {
+                    finish()
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

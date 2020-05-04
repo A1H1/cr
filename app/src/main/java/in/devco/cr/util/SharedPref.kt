@@ -36,6 +36,20 @@ object SharedPref {
         return Gson().fromJson(pref.getString(PREF_USER, ""), User::class.java)
     }
 
+    fun logout() {
+        val pref = CRApplication
+            .instance
+            .applicationContext
+            .getSharedPreferences(
+                PREF_FILE,
+                MODE_PRIVATE
+            )
+            .edit()
+
+        pref.remove(PREF_USER)
+        pref.apply()
+    }
+
     fun setFCMToken(token: String) {
         val pref = CRApplication
             .instance

@@ -30,6 +30,7 @@ class SignUpActivity : BaseMVVMActivity<User, SignUpViewModel>() {
 
     override fun init() {
         super.init()
+        setActivityTitle("")
         toolbarTitleText.setText(R.string.register)
         actionTextView.setText(R.string.sign_up)
     }
@@ -53,8 +54,7 @@ class SignUpActivity : BaseMVVMActivity<User, SignUpViewModel>() {
 
     override fun setData(data: User) {
         setUser(data).apply {
-            viewModel.updateToken()
-            HomeActivity.launch(this@SignUpActivity).apply {
+            HomeActivity.launch(this@SignUpActivity, true).apply {
                 finish()
             }
         }

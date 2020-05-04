@@ -47,11 +47,4 @@ class LoginViewModel @Inject constructor(private val repository: UserRepository)
                 })
         )
     }
-
-    fun updateToken() {
-        repository.updateFCMToken(getFCMToken().orEmpty()).enqueue(object : Callback<Void> {
-            override fun onFailure(call: Call<Void>, t: Throwable) {}
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {}
-        })
-    }
 }
