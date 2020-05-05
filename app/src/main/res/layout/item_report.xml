@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:strokeColor="@color/colorPrimaryDark"
-    app:strokeWidth="1dp"
-    android:layout_marginTop="@dimen/large_small"
     android:layout_marginStart="@dimen/large_small"
+    android:layout_marginTop="@dimen/large_small"
     android:layout_marginEnd="@dimen/large_small"
-    >
+    app:cardCornerRadius="4dp"
+    app:cardElevation="1dp"
+    app:strokeColor="@color/colorPrimaryDark"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,52 +32,49 @@
             android:id="@+id/appCompatTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_medium"
+            android:text="@string/status"
             android:textAllCaps="true"
             android:textSize="@dimen/text_small"
-            android:layout_marginTop="@dimen/small_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"
-            tools:text="Status -" />
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/statusTextView"
             style="@style/TextAppearance.AppCompat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_medium"
+            android:layout_marginStart="@dimen/small"
+            android:textSize="@dimen/text_normal"
+            app:layout_constraintBottom_toBottomOf="@id/appCompatTextView"
             app:layout_constraintStart_toEndOf="@+id/appCompatTextView"
-            tools:text="Active"
             app:layout_constraintTop_toTopOf="@id/appCompatTextView"
-            app:layout_constraintBottom_toBottomOf="@id/appCompatTextView"/>
+            tools:text="Active" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/attachButton"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/attach"
             android:layout_marginTop="@dimen/small_medium"
+            android:layout_marginEnd="@dimen/small_normal"
+            android:text="@string/attach"
             app:icon="@drawable/ic_attach_file_black_24dp"
             app:layout_constraintEnd_toStartOf="@+id/acceptButton"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"
-            android:layout_marginEnd="@dimen/small_normal"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/acceptButton"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_normal"
+            android:layout_marginTop="@dimen/small_medium"
             android:text="@string/accept"
             app:icon="@drawable/ic_done_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/small_medium"
-            app:layout_constraintHorizontal_bias="0.5"
-            android:layout_marginStart="@dimen/small_normal"
             app:layout_constraintStart_toEndOf="@+id/attachButton"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
