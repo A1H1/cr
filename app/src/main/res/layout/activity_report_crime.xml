@@ -32,10 +32,11 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/addImageButton"
         style="@style/ButtonWithoutBorder"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="@dimen/extra_large"
-        android:src="@drawable/ic_filter_black_24dp"
+        android:src="@drawable/ic_camera_foreground"
+        android:background="@drawable/border_background"
         app:layout_constraintEnd_toStartOf="@+id/addVideoButton"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,8 +46,12 @@
         android:id="@+id/removeImageButton"
         android:layout_width="@dimen/extra_large"
         android:layout_height="@dimen/extra_large"
+        android:padding="@dimen/small"
         android:background="@drawable/bg_oval"
         android:src="@drawable/ic_close"
+        android:translationX="10dp"
+        android:translationY="-10dp"
+        android:translationZ="1dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/addImageButton"
         app:layout_constraintTop_toTopOf="@+id/addImageButton" />
@@ -54,11 +59,12 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/addVideoButton"
         style="@style/ButtonWithoutBorder"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="30dp"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_video_library_black_24dp"
+        android:src="@drawable/ic_video_foreground"
+        android:background="@drawable/border_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addImageButton"
         app:layout_constraintTop_toBottomOf="@+id/descriptionInputLayout" />
@@ -71,6 +77,9 @@
         android:padding="@dimen/small"
         android:src="@drawable/ic_close"
         android:visibility="gone"
+        android:translationX="10dp"
+        android:translationY="-10dp"
+        android:translationZ="1dp"
         app:layout_constraintEnd_toEndOf="@+id/addVideoButton"
         app:layout_constraintTop_toTopOf="@+id/addVideoButton" />
 
