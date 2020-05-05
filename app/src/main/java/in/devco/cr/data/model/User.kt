@@ -7,5 +7,14 @@ data class User(
     @SerializedName("email") val email: String,
     @SerializedName("name") val name: String,
     @SerializedName("phone") val phone: String,
-    @SerializedName("token") val token: String
+    @SerializedName("token") val token: String,
+    @SerializedName("role") val userTye: UserTye
 )
+
+enum class UserTye {
+    @SerializedName("police")
+    POLICE,
+
+    @SerializedName("citizen")
+    CITIZEN
+}

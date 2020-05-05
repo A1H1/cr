@@ -28,6 +28,7 @@
 
     <string name="title_activity_home">Home</string>
     <string name="title_activity_report_crime">Report Crime</string>
+    <string name="title_activity_all_report">All Reports</string>
 
     <string name="invalid_email">Invalid email</string>
     <string name="invalid_password">Password is too short</string>

@@ -24,6 +24,9 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:label="@string/title_activity_home" />
+        <activity
+            android:name=".ui.crimelist.CrimeListActivity"
+            android:label="@string/title_activity_all_report" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

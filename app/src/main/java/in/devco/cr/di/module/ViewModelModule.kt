@@ -2,6 +2,7 @@ package `in`.devco.cr.di.module
 
 import `in`.devco.cr.ui.auth.login.LoginViewModel
 import `in`.devco.cr.ui.auth.register.SignUpViewModel
+import `in`.devco.cr.ui.crimelist.CrimeListViewModel
 import `in`.devco.cr.ui.home.HomeViewModel
 import `in`.devco.cr.ui.reportcrime.ReportCrimeViewModel
 import `in`.devco.cr.util.ViewModelFactory
@@ -36,4 +37,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ReportCrimeViewModel::class)
     internal abstract fun reportCrimeViewModel(reportCrimeViewModel: ReportCrimeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CrimeListViewModel::class)
+    internal abstract fun crimeListViewModel(crimeListViewModel: CrimeListViewModel): ViewModel
 }
