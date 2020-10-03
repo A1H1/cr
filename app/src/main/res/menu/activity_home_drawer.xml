@@ -11,5 +11,9 @@
             android:id="@+id/nav_report_crime"
             android:icon="@drawable/ic_add"
             android:title="@string/title_activity_report_crime" />
+        <item
+            android:id="@+id/nav_all_report"
+            android:icon="@drawable/ic_format_list_bulleted"
+            android:title="@string/all_reports" />
     </group>
 </menu>

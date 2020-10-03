@@ -5,9 +5,14 @@ import `in`.devco.cr.data.model.ErrorResponse
 import `in`.devco.cr.util.AppUtils.displaySnackBar
 import `in`.devco.cr.util.ViewModelFactory
 import `in`.devco.cr.extensions.show
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
@@ -29,7 +34,9 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
     protected open fun observable() {
         viewModel.response.observe(this, Observer { response ->
             loading(response.isLoading)
-            response.response?.let { setData(it) }
+            response.response?.let {
+                setData(it)
+            }
             response.error?.let { error(it) }
             response.errorCode?.let { error(it) }
             response.exception?.let { error(it) }
@@ -42,7 +49,7 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
     protected open fun loading(isLoading: Boolean) {
         if (::progressDialog.isInitialized) {
             progressDialog.show(isLoading)
-        } else {
+        } else if (isLoading) {
             initMaterialDialog()
         }
     }
@@ -95,5 +102,15 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
             .cancelable(false)
             .progress(true, 0)
             .show()
+    }
+
+    fun bitMapFromVector(vectorResID:Int): BitmapDescriptor {
+        val vectorDrawable= ContextCompat.getDrawable(this,vectorResID)
+        vectorDrawable!!.setBounds(0,0, vectorDrawable.intrinsicWidth,vectorDrawable.intrinsicHeight)
+        val bitmap=
+            Bitmap.createBitmap(vectorDrawable.intrinsicWidth,vectorDrawable.intrinsicHeight,Bitmap.Config.ARGB_8888)
+        val canvas= Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 }

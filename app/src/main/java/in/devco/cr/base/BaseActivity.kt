@@ -1,6 +1,7 @@
 package `in`.devco.cr.base
 
 import `in`.devco.cr.R
+import `in`.devco.cr.data.model.UserTye
 import `in`.devco.cr.util.AppUtils.displaySnackBar
 import `in`.devco.cr.util.SharedPref
 import android.os.Bundle
@@ -15,6 +16,8 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     protected abstract fun layoutRes(): Int
     protected open fun init() {}
     protected var toolbar: Toolbar? = null
+
+    var isPolice = getUser()?.userTye == UserTye.POLICE
 
     var isDisplayHomeAsUpEnabled: Boolean
         get() = false

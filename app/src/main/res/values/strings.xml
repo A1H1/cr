@@ -43,4 +43,9 @@
     <string name="accept">Accept</string>
     <string name="attach">Attach</string>
     <string name="status">Status:</string>
+    <string name="all_reports">All Reports</string>
+    <string name="attachments">Attachment</string>
+    <string name="stop_location_sharing">Stop location Sharing</string>
+    <string name="all_users_alerted">All users alerted</string>
+    <string name="alert">Alert</string>
 </resources>

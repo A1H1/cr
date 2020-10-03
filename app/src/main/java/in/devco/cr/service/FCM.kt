@@ -4,6 +4,7 @@ import `in`.devco.cr.R
 import `in`.devco.cr.data.remote.API
 import `in`.devco.cr.ui.home.HomeActivity
 import `in`.devco.cr.util.SharedPref.setFCMToken
+import `in`.devco.cr.util.SharedPref.setTrackingUser
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -34,7 +35,12 @@ class FCM : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        sendNotification(message)
+
+        if (message.data["type"] == "start tracking") {
+            setTrackingUser(message.data["currUser"].orEmpty())
+        } else {
+            sendNotification(message)
+        }
     }
 
     override fun onNewToken(token: String) {
@@ -49,7 +55,7 @@ class FCM : FirebaseMessagingService() {
 
     private fun sendNotification(notification: RemoteMessage) {
         val notificationBuilder = NotificationCompat.Builder(this, "1")
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(getString(R.string.crime_alert))
             .setContentText(notification.data["title"])
             .setAutoCancel(true)

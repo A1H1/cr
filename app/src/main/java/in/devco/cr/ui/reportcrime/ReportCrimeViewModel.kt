@@ -46,8 +46,8 @@ class ReportCrimeViewModel @Inject constructor(private val repository: CrimeRepo
         disposable.add(
             repository
                 .reportCrime(
-                    location.latitude.toString(),
-                    location.longitude.toString(),
+                    location.latitude,
+                    location.longitude,
                     description,
                     imagePart,
                     videoPart

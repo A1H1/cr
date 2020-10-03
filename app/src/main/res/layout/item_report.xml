@@ -8,9 +8,7 @@
     android:layout_marginTop="@dimen/large_small"
     android:layout_marginEnd="@dimen/large_small"
     app:cardCornerRadius="4dp"
-    app:cardElevation="1dp"
-    app:strokeColor="@color/colorPrimaryDark"
-    app:strokeWidth="1dp">
+    app:cardElevation="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -53,26 +51,29 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/attachButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_medium"
             android:layout_marginEnd="@dimen/small_normal"
-            android:text="@string/attach"
-            app:icon="@drawable/ic_attach_file_black_24dp"
+            android:minWidth="0dp"
+            android:text="@string/alert"
+            app:backgroundTint="@android:color/holo_orange_dark"
+            app:icon="@drawable/ic_alert"
+            app:iconPadding="0dp"
             app:layout_constraintEnd_toStartOf="@+id/acceptButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/acceptButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_normal"
             android:layout_marginTop="@dimen/small_medium"
             android:text="@string/accept"
+            app:backgroundTint="@android:color/holo_green_dark"
             app:icon="@drawable/ic_done_black_24dp"
+            app:iconPadding="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/attachButton"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
