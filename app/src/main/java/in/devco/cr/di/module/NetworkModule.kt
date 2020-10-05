@@ -42,9 +42,9 @@ object NetworkModule {
             .addInterceptor(interceptor)
             .addInterceptor(AuthInterceptor(getUser()?.token))
 
-        return client.connectTimeout(18, TimeUnit.SECONDS)
-            .writeTimeout(180, TimeUnit.SECONDS)
-            .readTimeout(180, TimeUnit.SECONDS)
+        return client.connectTimeout(1800, TimeUnit.SECONDS)
+            .writeTimeout(1800, TimeUnit.SECONDS)
+            .readTimeout(1800, TimeUnit.SECONDS)
             .build()
     }
 }

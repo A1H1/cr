@@ -2,6 +2,8 @@ package `in`.devco.cr.ui.crimelist
 
 import `in`.devco.cr.R
 import `in`.devco.cr.data.model.Report
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +37,12 @@ class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
 
         holder.itemView.attachButton.setOnClickListener { listener?.alert(item.id) }
         holder.itemView.acceptButton.setOnClickListener { listener?.accept(item) }
+        holder.itemView.setOnClickListener {
+            if (item.files.isNotEmpty()) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.files.first()))
+                holder.itemView.context.startActivity(intent)
+            }
+        }
     }
 
     interface AdapterListener {

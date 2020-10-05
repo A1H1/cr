@@ -21,6 +21,7 @@ import javax.inject.Inject
 abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), ErrorHandler {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
     @Inject
     protected lateinit var viewModel: U
     private lateinit var progressDialog: MaterialDialog
@@ -104,12 +105,21 @@ abstract class BaseMVVMActivity<T, U : BaseViewModel<T>> : BaseActivity(), Error
             .show()
     }
 
-    fun bitMapFromVector(vectorResID:Int): BitmapDescriptor {
-        val vectorDrawable= ContextCompat.getDrawable(this,vectorResID)
-        vectorDrawable!!.setBounds(0,0, vectorDrawable.intrinsicWidth,vectorDrawable.intrinsicHeight)
-        val bitmap=
-            Bitmap.createBitmap(vectorDrawable.intrinsicWidth,vectorDrawable.intrinsicHeight,Bitmap.Config.ARGB_8888)
-        val canvas= Canvas(bitmap)
+    fun bitMapFromVector(vectorResID: Int): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(this, vectorResID)
+        vectorDrawable!!.setBounds(
+            0,
+            0,
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight
+        )
+        val bitmap =
+            Bitmap.createBitmap(
+                vectorDrawable.intrinsicWidth,
+                vectorDrawable.intrinsicHeight,
+                Bitmap.Config.ARGB_8888
+            )
+        val canvas = Canvas(bitmap)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }

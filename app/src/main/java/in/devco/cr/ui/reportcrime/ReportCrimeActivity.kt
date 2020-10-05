@@ -153,7 +153,7 @@ class ReportCrimeActivity : BaseMVVMActivity<Boolean, ReportCrimeViewModel>(), L
             descriptionEditText.text.toString(),
             location,
             getRealPathFromURI(imageUri, this),
-            getRealPathFromURI(imageUri, this)
+            getRealPathFromURI(videoUri, this)
         )
     }
 

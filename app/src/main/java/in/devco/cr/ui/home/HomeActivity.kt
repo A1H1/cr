@@ -14,13 +14,17 @@ import `in`.devco.cr.util.SharedPref.getTrackingUser
 import `in`.devco.cr.util.SharedPref.logout
 import `in`.devco.cr.util.checkLocationPermissions
 import `in`.devco.cr.util.getLocationUpdate
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import butterknife.OnClick
@@ -34,6 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.button_action.*
 import kotlinx.android.synthetic.main.nav_header_home.view.*
 
@@ -65,6 +70,7 @@ class HomeActivity : BaseMVVMActivity<LatLng, HomeViewModel>(), OnMapReadyCallba
 
     override fun init() {
         super.init()
+        clearTrackingUser()
         actionTextView.setText(R.string.emergency)
         setupNavigationView()
 
@@ -95,12 +101,14 @@ class HomeActivity : BaseMVVMActivity<LatLng, HomeViewModel>(), OnMapReadyCallba
     }
 
     override fun setData(data: LatLng) {
+        navigateButton.show()
+        otherLocation = data
         marker?.position = data
         if (!haveMarker) {
             haveMarker = true
             markerOptions.position(data)
 
-            markerOptions.icon(bitMapFromVector(R.drawable.ic_circle))
+            markerOptions.icon(bitMapFromVector(if (isPolice) R.drawable.ic_circle else R.drawable.ic_police))
             googleMap?.clear()
             marker = googleMap?.addMarker(markerOptions)
         }
@@ -114,6 +122,24 @@ class HomeActivity : BaseMVVMActivity<LatLng, HomeViewModel>(), OnMapReadyCallba
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                1
+            )
+            return
+        }
         googleMap.isMyLocationEnabled = haveLocationPermission
     }
 
@@ -153,6 +179,24 @@ class HomeActivity : BaseMVVMActivity<LatLng, HomeViewModel>(), OnMapReadyCallba
 
     override fun onPermissionGranted() {
         haveLocationPermission = true
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                1
+            )
+            return
+        }
         googleMap?.isMyLocationEnabled = haveLocationPermission
 
         disposable.clear()
@@ -179,6 +223,8 @@ class HomeActivity : BaseMVVMActivity<LatLng, HomeViewModel>(), OnMapReadyCallba
             }
 
         } else if (getTrackingUser().orEmpty().isNotEmpty()) {
+            navigateButton.show()
+            actionTextView.setText(R.string.stop_location_sharing)
             isLocationShareRequired = true
             viewModel.getLocation(getTrackingUser().orEmpty())
             clearTrackingUser()
@@ -208,6 +254,12 @@ class HomeActivity : BaseMVVMActivity<LatLng, HomeViewModel>(), OnMapReadyCallba
         }
         actionTextView.setText(if (isLocationShareRequired) R.string.emergency else R.string.stop_location_sharing)
         isLocationShareRequired = !isLocationShareRequired
+
+        if (!isLocationShareRequired) {
+            navigateButton.hide()
+            marker?.remove()
+            haveMarker = false
+        }
     }
 
     @OnClick(R.id.redZoneButton)
@@ -216,6 +268,17 @@ class HomeActivity : BaseMVVMActivity<LatLng, HomeViewModel>(), OnMapReadyCallba
             googleMap?.clear()
         } else {
             currentLocation?.let { viewModel.getRedZone(it) }
+        }
+    }
+
+    @OnClick(R.id.navigateButton)
+    fun startNavigation() {
+        otherLocation?.let {
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?${if (currentLocation != null) "saddr=${currentLocation?.latitude},${currentLocation?.longitude}" else ""}&daddr=${otherLocation?.latitude},${otherLocation?.longitude}")
+            )
+            startActivity(intent)
         }
     }
 
